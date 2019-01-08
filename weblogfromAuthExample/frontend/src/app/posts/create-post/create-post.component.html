@@ -1,0 +1,27 @@
+<!-- Default form contact -->
+<form #createPostForm="ngForm" (ngSubmit)="createPost(createPostForm.value)"
+      class="text-center border border-light p-5">
+
+  <p class="h4 mb-4">Contact us</p>
+
+  <!--Title-->
+  <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Titel" required ngModel
+         name="title" #title="ngModel">
+
+  <!-- Text -->
+  <div class="form-group">
+    <textarea #text="ngModel" ngModel name="text" required class="form-control rounded-0"
+              id="exampleFormControlTextarea2" rows="7" placeholder="Message"></textarea>
+  </div>
+
+  <!-- Copy -->
+  <div class="custom-control custom-checkbox mb-4">
+    <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
+    <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+  </div>
+
+  <!-- Send button -->
+  <button class="btn btn-info btn-block" type="submit" [disabled]="createPostForm.invalid">Send</button>
+
+</form>
+<!-- Default form contact -->

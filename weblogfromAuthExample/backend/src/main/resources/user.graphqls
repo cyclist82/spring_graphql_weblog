@@ -1,0 +1,60 @@
+# java.util.Date implementation
+scalar Date
+
+# java.time.LocalDate implementation
+scalar LocalDate
+
+# java.time.LocalDateTime implementation
+scalar LocalDateTime
+
+# java.time.LocalTime implementation
+scalar LocalTime
+
+type Query {
+    users: [User]
+    get(id: String!): User
+    verify(token: String!): UserAuth!
+    login(credentials: CredentialsInput!): UserAuth
+}
+
+type Mutation {
+    create(username: String!, email: String!, password: String!): User!
+    update(id: String, input: UserInput): User
+    delete(id: String!): User!
+    createPost(title: String!, text: String!): Post!
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    password: String!
+    createdAt: String!
+    modifiedAt: String!
+    posts: [Post]!
+}
+
+type UserAuth {
+    user: User!
+    token: String!
+}
+
+input UserInput {
+    email: String
+    password: String
+}
+
+input CredentialsInput {
+    email: String!
+    password: String!
+}
+
+type Post {
+    id: ID!
+    title: String!
+    text: String!
+    creator: User!
+    createdAt: LocalDateTime!
+    lastModifiedAt: LocalDateTime
+    lastModifier: User
+}

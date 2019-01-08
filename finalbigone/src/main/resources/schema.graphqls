@@ -1,0 +1,31 @@
+# LocalDateTime implementation
+scalar LocalDateTime
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    allPosts{
+        id
+        title
+        text
+        creator{
+            id
+            name
+            email
+        }
+        createdAt
+        lastModifiedAt
+        lastModifier{
+            id
+            name
+            email
+        }}
+
+}
+
+type Mutation {
+    create(username: String!, email: String!, password: String!): User!
+}
