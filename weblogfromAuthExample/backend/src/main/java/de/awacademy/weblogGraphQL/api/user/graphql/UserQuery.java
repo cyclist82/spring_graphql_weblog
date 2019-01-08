@@ -33,6 +33,7 @@ public class UserQuery implements GraphQLQueryResolver {
         return dao.all();
     }
 
+    @Unsecured
     public User get(String id) {
         return dao.get(id);
     }

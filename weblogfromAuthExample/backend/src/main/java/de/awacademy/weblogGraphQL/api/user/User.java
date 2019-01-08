@@ -3,7 +3,7 @@ package de.awacademy.weblogGraphQL.api.user;
 import de.awacademy.weblogGraphQL.api.post.Post;
 import de.awacademy.weblogGraphQL.api.user.graphql.input.UserInput;
 import de.awacademy.weblogGraphQL.utility.Mergeable;
-import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -30,17 +30,19 @@ public class User implements Mergeable<User, UserInput> {
 
 
 	@CreatedDate
-	private DateTime createdAt;
+	private LocalDateTime createdAt;
 
 	@LastModifiedDate
-	private DateTime modifiedAt;
+	private LocalDateTime modifiedAt;
 
 	public User() {
 		this.id = UUID.randomUUID().toString();
+		this.createdAt = LocalDateTime.now();
 	}
 
 	public User(String username, String email, String password) {
 		this.id = UUID.randomUUID().toString();
+		this.createdAt = LocalDateTime.now();
 		this.username = username;
 		this.email = email;
 		this.password = password;
@@ -70,11 +72,11 @@ public class User implements Mergeable<User, UserInput> {
 		this.password = password;
 	}
 
-	public DateTime getCreatedAt() {
+	public LocalDateTime getCreatedAt() {
 		return createdAt;
 	}
 
-	public DateTime getModifiedAt() {
+	public LocalDateTime getModifiedAt() {
 		return modifiedAt;
 	}
 

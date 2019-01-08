@@ -11,7 +11,9 @@ const getPosts_Q = gql`
       title
       text
       createdAt
-
+      creator {
+        username
+      }
     }
   }
 `;
@@ -24,6 +26,9 @@ const createNewPost_M = gql`
       title
       text
       createdAt
+      creator {
+        username
+      }
     }
   }`;
 

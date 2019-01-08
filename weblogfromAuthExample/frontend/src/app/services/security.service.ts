@@ -10,7 +10,7 @@ import {async} from 'rxjs/internal/scheduler/async';
 })
 export class SecurityService {
 
-  user$ = new BehaviorSubject<User | null>(null);
+  private user$ = new BehaviorSubject<User | null>(null);
 
   constructor(private backendService: BackendService, private router: Router) {
     this.reloadUser();
@@ -28,12 +28,16 @@ export class SecurityService {
   }
 
   getCurrentUser() {
-    return  this.user$;
+    return this.user$;
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.user$ = null;
+    this.user$.next(null);
     this.router.navigate(['/']);
+  }
+
+  setCurrentUser(user: User) {
+    this.user$.next(user);
   }
 }

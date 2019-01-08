@@ -1,0 +1,48 @@
+<div class="row mt-4">
+  <div class="col-md-8 offset-md-2">
+    <!-- Default form register -->
+    <form [formGroup]="signupForm" (ngSubmit)="signup()"
+          class="text-center border border-light p-5">
+      <p class="h4 mb-4">Anmeldung</p>
+      <input type="text" id="defaultRegisterFormFirstName"
+             class="form-control" placeholder="Benutzername"
+             formControlName="username">
+      <!-- E-mail -->
+      <input type="email" id="defaultRegisterFormEmail"
+             class="form-control my-4" placeholder="E-mail"
+             formControlName="email">
+      <!-- Password -->
+      <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Passwort"
+             aria-describedby="defaultRegisterFormPasswordHelpBlock"
+             formControlName="password">
+      <small id="defaultRegisterFormPasswordHelpBlock"
+             class="form-text text-muted mb-4">
+        Bitte mindestens 8 Zeichen
+      </small>
+      <!-- Password Confirm-->
+      <input type="password" id="defaultRegisterFormPasswordConfirm" class="form-control"
+             placeholder="Passwort wiederholen"
+             aria-describedby="defaultRegisterFormPasswordConfirmHelpBlock"
+             formControlName="passwordConfirm">
+      <small id="defaultRegisterFormPasswordConfirmHelpBlock"
+             class="form-text text-muted mb-4">
+        Passwort Wiederholung
+      </small>
+
+
+      <!-- Sign up button -->
+      <button mdbBtn color="info" block="true" class="my-4" type="submit" [disabled]="signupForm.invalid">Anmelden
+      </button>
+
+      <hr>
+
+      <!-- Terms of service -->
+      <p>By clicking
+        <em>Sign up</em> you agree to our
+        <a href="" target="_blank">terms of service</a> and
+        <a href="" target="_blank">terms of service</a>. </p>
+
+    </form>
+    <!-- Default form register -->
+  </div>
+</div>

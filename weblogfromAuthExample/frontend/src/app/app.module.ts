@@ -1,11 +1,11 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
+import {LOCALE_ID, NgModule, NO_ERRORS_SCHEMA} from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppComponent} from './app.component';
 
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
 import {environment} from '../environments/environment';
 import {HttpClientModule, HttpHeaders} from '@angular/common/http';
@@ -26,6 +26,10 @@ import {PostDetailComponent} from './posts/post-list/post-detail/post-detail.com
 import {PostListService} from './posts/post-list.service';
 import {PostService} from './services/post.service';
 import {CommonModule} from '@angular/common';
+import {CustomDatePipe} from './helpers/custom-date.pipe';
+import {SignupComponent} from './auth/signup/signup.component';
+import {SignupService} from './auth/signup/signup.service';
+import {ToastaModule} from 'ngx-toasta';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -62,6 +66,8 @@ export function createApollo(httpLink: HttpLink) {
     CreatePostComponent,
     PostListComponent,
     PostDetailComponent,
+    CustomDatePipe,
+    SignupComponent,
   ],
   imports: [
     CommonModule,
@@ -74,17 +80,21 @@ export function createApollo(httpLink: HttpLink) {
     HttpLinkModule,
     AppRoutingModule,
     PostRoutingModule,
+    ReactiveFormsModule,
+    ToastaModule.forRoot(),
   ],
   providers: [
     BackendService,
     AuthGuard,
     SecurityService,
     PostListService,
-    PostService, {
+    PostService,
+    SignupService, {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
       deps: [HttpLink],
-    }],
+    },
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })

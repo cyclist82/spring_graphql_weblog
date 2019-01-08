@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       this.dataLoading = false;
       console.log(res);
       window.localStorage.setItem('token', res.data['login'].token);
-      this.security.user$ = res.data['login'].user;
+      this.security.setCurrentUser(res.data['login'].user);
       this.router.navigate(['/']);
     }, (error) => {
       console.log(error);

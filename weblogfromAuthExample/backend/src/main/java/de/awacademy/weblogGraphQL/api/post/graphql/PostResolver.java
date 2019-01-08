@@ -4,6 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import de.awacademy.weblogGraphQL.api.post.Post;
 import de.awacademy.weblogGraphQL.api.user.User;
 import de.awacademy.weblogGraphQL.api.user.UserRepository;
+import de.awacademy.weblogGraphQL.services.security.Unsecured;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,10 +16,12 @@ public class PostResolver implements GraphQLResolver<Post> {
 		this.userRepository = userRepository;
 	}
 
+	@Unsecured
 	public User getCreator(Post post) {
 		return userRepository.findById(post.getCreator().getId()).get();
 	}
 
+	@Unsecured
 	public User getLastModifier(Post post) {
 		return userRepository.findById(post.getLastModifier().getId()).get();
 	}
