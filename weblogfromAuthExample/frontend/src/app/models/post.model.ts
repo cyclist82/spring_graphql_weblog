@@ -8,5 +8,4 @@ export interface Post {
   createdAt: Date;
   lastModifiedAt: Date;
   lastModifier: User;
-
 }

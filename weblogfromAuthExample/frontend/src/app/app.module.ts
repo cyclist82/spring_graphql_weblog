@@ -20,8 +20,12 @@ import {HeaderComponent} from './common/header/header.component';
 import {PostsComponent} from './posts/posts.component';
 import {AppRoutingModule} from './app-routing.module';
 import {PostRoutingModule} from './posts/shared/post-routing/post-routing.module';
-import { CreatePostComponent } from './posts/create-post/create-post.component';
-import { PostListComponent } from './posts/post-list/post-list.component';
+import {CreatePostComponent} from './posts/create-post/create-post.component';
+import {PostListComponent} from './posts/post-list/post-list.component';
+import {PostDetailComponent} from './posts/post-list/post-detail/post-detail.component';
+import {PostListService} from './posts/post-list.service';
+import {PostService} from './services/post.service';
+import {CommonModule} from '@angular/common';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -57,8 +61,10 @@ export function createApollo(httpLink: HttpLink) {
     PostsComponent,
     CreatePostComponent,
     PostListComponent,
+    PostDetailComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     MDBBootstrapModule.forRoot(),
@@ -72,7 +78,9 @@ export function createApollo(httpLink: HttpLink) {
   providers: [
     BackendService,
     AuthGuard,
-    SecurityService, {
+    SecurityService,
+    PostListService,
+    PostService, {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
       deps: [HttpLink],

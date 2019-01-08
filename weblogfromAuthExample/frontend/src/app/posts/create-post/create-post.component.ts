@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {PostService} from '../../services/post.service';
+import {Router} from '@angular/router';
+import {PostListService} from '../post-list.service';
 
 @Component({
   selector: 'app-create-post',
@@ -8,16 +10,17 @@ import {PostService} from '../../services/post.service';
 })
 export class CreatePostComponent implements OnInit {
 
-  constructor(private postService: PostService) {
+  constructor(private postService: PostService, private router: Router, private postListService: PostListService) {
   }
 
   ngOnInit() {
   }
 
-  createPost(createPostForm: any) {
-    this.postService.createPost(createPostForm)
+  createNewPost(createPostForm: any) {
+    this.postService.createNewPost(createPostForm)
       .subscribe((res) => {
-        console.log(res);
+        this.postListService.addPost(res.data['createPost']);
+        this.router.navigate(['/posts']);
       }, (error) => {
         console.log(error);
       });

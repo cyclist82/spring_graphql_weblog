@@ -35,6 +35,6 @@ public class PostDao implements API<Post, PostInput> {
 
 	@Override
 	public List<Post> all() {
-		return null;
+		return postRepository.findAll();
 	}
 }

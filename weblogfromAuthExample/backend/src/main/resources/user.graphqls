@@ -15,6 +15,7 @@ type Query {
     get(id: String!): User
     verify(token: String!): UserAuth!
     login(credentials: CredentialsInput!): UserAuth
+    allPosts: [Post]
 }
 
 type Mutation {
