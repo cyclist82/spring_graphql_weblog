@@ -10,6 +10,7 @@ import {Router} from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
+  error: String;
   dataLoading = false;
 
   constructor(private backendService: BackendService, private security: SecurityService, private router: Router) {
@@ -20,13 +21,14 @@ export class LoginComponent implements OnInit {
 
 
   login(formData) {
+    this.error = null;
     this.backendService.loginUser(formData).valueChanges.subscribe(res => {
       this.dataLoading = false;
-      console.log(res);
       window.localStorage.setItem('token', res.data['login'].token);
       this.security.setCurrentUser(res.data['login'].user);
       this.router.navigate(['/']);
     }, (error) => {
+      this.error = error;
       console.log(error);
     });
   }

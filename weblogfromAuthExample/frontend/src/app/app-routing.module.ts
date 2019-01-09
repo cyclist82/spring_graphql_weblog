@@ -3,11 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {LoginComponent} from './auth/login/login.component';
 import {CommonModule} from '@angular/common';
 import {SignupComponent} from './auth/signup/signup.component';
+import {UpdateUserComponent} from './auth/update-user/update-user.component';
+import {AuthGuard} from './auth/auth-services/auth.guard';
 
 const routes: Routes = [
   {path: '', redirectTo: 'posts', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
+  {path: 'editUser', component: UpdateUserComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

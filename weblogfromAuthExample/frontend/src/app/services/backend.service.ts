@@ -37,9 +37,9 @@ const createUser_M = gql`mutation updateQueries($name: String!, $email: String!,
     email
   }
 }`;
-const updateUser_M = gql`mutation updateQueries($name: String!, $email: String!, $password: String!) {
-  updateUser_M(name:$name, email:$email, password:$password){
-    name
+const updateUser_M = gql`mutation updateQueries($id: String!, $username: String!, $email: String!, $password: String, $passwordOld: String!) {
+  update(id: $id, username:$username, email:$email, password:$password, passwordOld: $passwordOld){
+    username
     email
   }
 }`;
@@ -92,9 +92,11 @@ export class BackendService {
     return this.apollo.mutate({
       mutation: updateUser_M,
       variables: {
-        name: formData.name,
+        id: formData.id,
+        username: formData.username,
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        passwordOld: formData.passwordOld,
       }
     });
   }

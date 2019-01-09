@@ -23,7 +23,6 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.passwordDontMatch = false;
   }
 
 
@@ -33,9 +32,9 @@ export class SignupComponent implements OnInit {
       this.signupForm.patchValue({password: ''});
       this.signupForm.patchValue({passwordConfirm: ''});
     } else {
+      this.passwordDontMatch = false;
       this.signupService.createNewUser(this.signupForm.value)
         .subscribe((res) => {
-          console.log(res);
           this.signupForm.reset();
           this.router.navigate(['/login']);
         }, (error) => {
@@ -43,6 +42,7 @@ export class SignupComponent implements OnInit {
           console.log(error);
         });
     }
-
   }
+
+
 }

@@ -1,0 +1,60 @@
+<div class="row mt-4">
+  <div class="col-md-8 offset-md-2">
+    <!-- Default form register -->
+    <form [formGroup]="signupForm" (ngSubmit)="onEditUser()"
+          class="text-center border border-light p-5">
+      <p class="h4 mb-4">Meine Daten ändern</p>
+      <input
+        [ngClass]="!signupForm.get('username').valid && (signupForm.get('username').dirty||signupForm.get('username').touched) ? 'border border-danger':''"
+        type="text" id="defaultRegisterFormName"
+        class="form-control" placeholder="Benutzername"
+        formControlName="username">
+      <small
+        *ngIf="!signupForm.get('username').valid && (signupForm.get('username').dirty||signupForm.get('username').touched)"
+        id="defaultRegisterFormNameHelp"
+        class="form-text text-muted mb-2">
+        Bitte mindestens 3 Zeichen
+      </small>
+      <!-- E-mail -->
+      <input
+        [ngClass]="!signupForm.get('email').valid && (signupForm.get('email').dirty||signupForm.get('email').touched) ? 'border border-danger':''"
+        type="email" id="defaultRegisterFormEmail"
+        class="form-control my-4" placeholder="E-mail"
+        formControlName="email">
+      <!-- Password -->
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{error.toString() | graphqlerror}}
+      </div>
+      <input type="password" id="defaultRegisterFormPasswordOld" class="form-control" placeholder="Aktuelles Passwort"
+             aria-describedby="defaultRegisterFormPasswordHelpBlock"
+             formControlName="passwordOld">
+      <small id="defaultRegisterFormPasswordOldHelpBlock"
+             class="form-text text-muted mb-2">Neues Passwort muss nicht vergeben werden, sie können auch nur Ihre Daten ändern</small>
+      <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Neues Passwort"
+             aria-describedby="defaultRegisterFormPasswordHelpBlock"
+             formControlName="password">
+      <small id="defaultRegisterFormPasswordHelpBlock"
+             class="form-text text-muted mb-2">
+        Bitte mindestens 8 Zeichen
+      </small>
+      <!-- Password Confirm-->
+      <input type="password" id="defaultRegisterFormPasswordConfirm" class="form-control"
+             placeholder="Neues Passwort wiederholen"
+             aria-describedby="defaultRegisterFormPasswordConfirmHelpBlock"
+             formControlName="passwordConfirm">
+      <small *ngIf="!passwordDontMatch" id="defaultRegisterFormPasswordConfirmHelpBlock"
+             class="form-text text-muted mb-4">
+        Passwort Wiederholung
+      </small>
+      <div *ngIf="passwordDontMatch" class="alert alert-danger py-2 mt-2" role="alert">Passwörter stimmen nicht
+        überein
+      </div>
+
+
+      <!-- Sign up button -->
+      <button mdbBtn color="info" block="true" class="my-4" type="submit" [disabled]="signupForm.invalid">Speichern
+      </button>
+    </form>
+    <!-- Default form register -->
+  </div>
+</div>

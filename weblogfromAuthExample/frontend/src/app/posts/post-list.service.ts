@@ -29,8 +29,9 @@ export class PostListService implements OnInit {
 
   // Function to add created Post to PostList
   addPost(post: Post) {
+    const postArray = [post];
     const currentValue = this.posts$.value;
-    const updatedValue = [...currentValue, post];
+    const updatedValue = postArray.concat(currentValue);
     this.posts$.next(updatedValue);
     console.log(this.posts$.value);
   }

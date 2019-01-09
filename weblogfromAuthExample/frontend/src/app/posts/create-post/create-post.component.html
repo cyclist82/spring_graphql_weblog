@@ -17,11 +17,13 @@
   </div>
 
   <!-- Copy -->
-  <div class="custom-control custom-checkbox mb-4">
-    <input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">
-    <label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>
+  <!--<div class="custom-control custom-checkbox mb-4">-->
+    <!--<input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">-->
+    <!--<label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>-->
+  <!--</div>-->
+  <div *ngIf="error" class="alert alert-danger" role="alert">
+    {{error.toString() | graphqlerror}}
   </div>
-
   <!-- Send button -->
   <button class="btn btn-info btn-block" type="submit" [disabled]="createPostForm.invalid">Send</button>
 

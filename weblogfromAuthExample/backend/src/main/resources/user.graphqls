@@ -10,6 +10,12 @@ scalar LocalDateTime
 # java.time.LocalTime implementation
 scalar LocalTime
 
+enum SortOrder {
+    ASC
+    DESC
+}
+
+
 type Query {
     users: [User]
     get(id: String!): User
@@ -20,7 +26,7 @@ type Query {
 
 type Mutation {
     createUser(username: String!, email: String!, password: String!): User!
-    update(id: String, input: UserInput): User
+    update(id: String!, username: String!, email: String!, passwordOld: String!, password: String): User
     delete(id: String!): User!
     createPost(title: String!, text: String!): Post!
 }

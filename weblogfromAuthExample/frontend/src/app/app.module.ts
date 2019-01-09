@@ -12,7 +12,7 @@ import {HttpClientModule, HttpHeaders} from '@angular/common/http';
 import {InMemoryCache} from 'apollo-cache-inmemory';
 import {setContext} from 'apollo-link-context';
 import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
-import {AuthGuard} from './services/auth.guard';
+import {AuthGuard} from './auth/auth-services/auth.guard';
 import {BackendService} from './services/backend.service';
 import {LoginComponent} from './auth/login/login.component';
 import {SecurityService} from './services/security.service';
@@ -29,7 +29,9 @@ import {CommonModule} from '@angular/common';
 import {CustomDatePipe} from './helpers/custom-date.pipe';
 import {SignupComponent} from './auth/signup/signup.component';
 import {SignupService} from './auth/signup/signup.service';
-import {ToastaModule} from 'ngx-toasta';
+import {GraphqlerrorPipe} from './helpers/graphqlerror.pipe';
+import { CustomTimePipe } from './helpers/custom-time.pipe';
+import { UpdateUserComponent } from './auth/update-user/update-user.component';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -68,6 +70,9 @@ export function createApollo(httpLink: HttpLink) {
     PostDetailComponent,
     CustomDatePipe,
     SignupComponent,
+    GraphqlerrorPipe,
+    CustomTimePipe,
+    UpdateUserComponent,
   ],
   imports: [
     CommonModule,
@@ -81,7 +86,6 @@ export function createApollo(httpLink: HttpLink) {
     AppRoutingModule,
     PostRoutingModule,
     ReactiveFormsModule,
-    ToastaModule.forRoot(),
   ],
   providers: [
     BackendService,
@@ -89,7 +93,8 @@ export function createApollo(httpLink: HttpLink) {
     SecurityService,
     PostListService,
     PostService,
-    SignupService, {
+    SignupService,
+    {
       provide: APOLLO_OPTIONS,
       useFactory: createApollo,
       deps: [HttpLink],

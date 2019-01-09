@@ -8,7 +8,7 @@ public interface API<T, I> {
 
     T delete(String id);
 
-    T update(String id, I input);
+//    T update(String id, I input);
 
     T get(String id);
 

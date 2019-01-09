@@ -5,18 +5,18 @@
   <div class="view overlay">
     <img class="card-img-top" src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
          alt="Card image cap">
-    <a href="#!">
-      <div class="mask rgba-white-slight"></div>
-    </a>
+    <div class="mask rgba-white-slight">{{post.title}}</div>
   </div>
-
   <!-- Card content -->
   <div class="card-body">
 
     <!-- Title -->
     <h4 class="card-title">{{post.title}}</h4>
     <p class="card-text">{{post.creator.username}}</p>
-    <p class="card-text">{{post.createdAt | customDate}}</p>
+    <p class="card-text"><i class="fa fa-clock-o"></i> {{post.createdAt | customTime}}  <i
+      class="fa fa-calendar"></i> {{post.createdAt | customDate}}</p>
+    <p *ngIf="post.lastModifiedAt" class="card-text"><i class="fa fa-clock-o"></i> {{post.lastModifiedAt | customTime}}  <i
+      class="fa fa-calendar"></i> {{post.lastModifiedAt | customDate}}</p>
     <!-- Text -->
     <p class="card-text">{{post.text}}</p>
     <!-- Button -->

@@ -2,11 +2,10 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" href="#">Navbar</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" routerLink="/posts">Navbar</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
-
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -35,15 +34,22 @@
     </ul>
     <!-- Links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="signup" routerLinkActive="active">Signup</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" mdbWavesEffect routerLink="login" routerLinkActive="active">Login</a>
-      </li>
-      <li class="nav-item">
-        <a (click)="logout()" class="nav-link waves-light" mdbWavesEffect>Logout</a>
-      </li>
+      <ng-container *ngIf="!currentUser">
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="signup" routerLinkActive="active">Signup</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="login" routerLinkActive="active">Login</a>
+        </li>
+      </ng-container>
+      <ng-container *ngIf="currentUser!=null">
+        <li  class="nav-item" routerLinkActive="active">
+          <a class="nav-link waves-light" mdbWavesEffect routerLink="editUser">Meine Daten</a>
+        </li>
+        <li *ngIf="currentUser!=null" class="nav-item">
+          <a (click)="logout()" class="nav-link waves-light" mdbWavesEffect>Logout</a>
+        </li>
+      </ng-container>
     </ul>
 
 
@@ -57,4 +63,5 @@
   <!-- Collapsible content -->
 
 </mdb-navbar>
+
 <!--/.Navbar-->

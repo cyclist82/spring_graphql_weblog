@@ -2,7 +2,6 @@ package de.awacademy.weblogGraphQL.api.post;
 
 import de.awacademy.weblogGraphQL.api.API;
 import de.awacademy.weblogGraphQL.api.post.graphql.input.PostInput;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,8 +9,12 @@ import java.util.List;
 @Component
 public class PostDao implements API<Post, PostInput> {
 
-	@Autowired
+	private PostRepositoryPagingSorting postRepositoryPagingSorting;
 	private PostRepository postRepository;
+
+	public PostDao(PostRepository postRepository) {
+		this.postRepository = postRepository;
+	}
 
 	@Override
 	public Post create(Post post) {
@@ -24,17 +27,13 @@ public class PostDao implements API<Post, PostInput> {
 	}
 
 	@Override
-	public Post update(String id, PostInput input) {
-		return null;
-	}
-
-	@Override
 	public Post get(String id) {
 		return null;
 	}
 
 	@Override
 	public List<Post> all() {
-		return postRepository.findAll();
+		return postRepository.findAllByOrderByCreatedAtDesc();
 	}
+
 }

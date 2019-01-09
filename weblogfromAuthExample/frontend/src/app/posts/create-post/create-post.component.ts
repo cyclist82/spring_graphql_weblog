@@ -10,6 +10,8 @@ import {PostListService} from '../post-list.service';
 })
 export class CreatePostComponent implements OnInit {
 
+  error: String;
+
   constructor(private postService: PostService, private router: Router, private postListService: PostListService) {
   }
 
@@ -20,9 +22,10 @@ export class CreatePostComponent implements OnInit {
     this.postService.createNewPost(createPostForm)
       .subscribe((res) => {
         this.postListService.addPost(res.data['createPost']);
+        // this.postListService.loadPosts();
         this.router.navigate(['/posts']);
       }, (error) => {
-        console.log(error);
+        this.error = error;
       });
   }
 }

@@ -4,19 +4,28 @@
     <form [formGroup]="signupForm" (ngSubmit)="signup()"
           class="text-center border border-light p-5">
       <p class="h4 mb-4">Anmeldung</p>
-      <input type="text" id="defaultRegisterFormFirstName"
+      <input [ngClass]="!signupForm.get('username').valid && (signupForm.get('username').dirty||signupForm.get('username').touched) ? 'border border-danger':''"
+             type="text" id="defaultRegisterFormName"
              class="form-control" placeholder="Benutzername"
              formControlName="username">
+      <small *ngIf="!signupForm.get('username').valid && (signupForm.get('username').dirty||signupForm.get('username').touched)" id="defaultRegisterFormNameHelp"
+             class="form-text text-muted mb-2">
+        Bitte mindestens 3 Zeichen
+      </small>
       <!-- E-mail -->
-      <input type="email" id="defaultRegisterFormEmail"
+      <input [ngClass]="!signupForm.get('email').valid && (signupForm.get('email').dirty||signupForm.get('email').touched) ? 'border border-danger':''"
+             type="email" id="defaultRegisterFormEmail"
              class="form-control my-4" placeholder="E-mail"
              formControlName="email">
       <!-- Password -->
+      <div *ngIf="error" class="alert alert-danger" role="alert">
+        {{error.toString() | graphqlerror}}
+      </div>
       <input type="password" id="defaultRegisterFormPassword" class="form-control" placeholder="Passwort"
              aria-describedby="defaultRegisterFormPasswordHelpBlock"
              formControlName="password">
       <small id="defaultRegisterFormPasswordHelpBlock"
-             class="form-text text-muted mb-4">
+             class="form-text text-muted mb-2">
         Bitte mindestens 8 Zeichen
       </small>
       <!-- Password Confirm-->
@@ -24,10 +33,12 @@
              placeholder="Passwort wiederholen"
              aria-describedby="defaultRegisterFormPasswordConfirmHelpBlock"
              formControlName="passwordConfirm">
-      <small id="defaultRegisterFormPasswordConfirmHelpBlock"
+      <small *ngIf="!passwordDontMatch" id="defaultRegisterFormPasswordConfirmHelpBlock"
              class="form-text text-muted mb-4">
         Passwort Wiederholung
       </small>
+      <div *ngIf="passwordDontMatch" class="alert alert-danger py-2 mt-2" role="alert">Passwörter stimmen nicht überein
+      </div>
 
 
       <!-- Sign up button -->

@@ -1,7 +1,10 @@
 <div class="container">
+
   <app-header></app-header>
-  <router-outlet></router-outlet>
+  <router-outlet>
+  </router-outlet>
   <ng-container *ngIf="user!=null">
     <p>{{user.id}}</p>
   </ng-container>
+
 </div>
