@@ -4,6 +4,7 @@ import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import de.awacademy.weblogGraphQL.api.post.Post;
 import de.awacademy.weblogGraphQL.api.post.PostDao;
 import de.awacademy.weblogGraphQL.api.post.PostRepositoryPagingSorting;
+import de.awacademy.weblogGraphQL.model.pagination.SortOrder;
 import de.awacademy.weblogGraphQL.services.security.Unsecured;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +26,8 @@ public class PostQuery implements GraphQLQueryResolver {
 		return dao.all();
 	}
 
-//	@Unsecured
-//	public List<Post> allPostsSorted(int page, int postPerPage, SortOrder sortOrder){
-//		return postRepositoryPagingSorting.
-//	}
+	@Unsecured
+	public PostsPagedOutput allPostsSorted(Integer page, Integer size, SortOrder sortOrder, String sortBy) {
+		return dao.allPostsPagedSorted(page, size, sortOrder, sortBy);
+	}
 }

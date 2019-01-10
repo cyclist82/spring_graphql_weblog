@@ -20,8 +20,9 @@ type Query {
     users: [User]
     get(id: String!): User
     verify(token: String!): UserAuth!
-    login(credentials: CredentialsInput!): UserAuth
-    allPosts: [Post]
+    login(credentials: CredentialsInput!): UserAuth!
+    allPosts: [Post]!
+    allPostsSorted(page: Int!, size: Int!, sortOrder: SortOrder!, sortBy: String!): PostsPagedOutput!
 }
 
 type Mutation {
@@ -63,4 +64,9 @@ type Post {
     createdAt: LocalDateTime!
     lastModifiedAt: LocalDateTime
     lastModifier: User
+}
+
+type PostsPagedOutput {
+    posts: [Post]!
+    amountPages: Int!
 }
