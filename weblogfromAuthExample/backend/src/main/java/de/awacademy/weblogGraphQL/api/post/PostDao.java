@@ -3,11 +3,14 @@ package de.awacademy.weblogGraphQL.api.post;
 import de.awacademy.weblogGraphQL.api.API;
 import de.awacademy.weblogGraphQL.api.post.graphql.PostsPagedOutput;
 import de.awacademy.weblogGraphQL.api.post.graphql.input.PostInput;
-import de.awacademy.weblogGraphQL.model.pagination.SortOrder;
+import de.awacademy.weblogGraphQL.api.user.User;
+import de.awacademy.weblogGraphQL.services.graphql.exceptions.IdNotFoundException;
+import graphql.GraphQLException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
@@ -41,9 +44,21 @@ public class PostDao implements API<Post, PostInput> {
 		return postRepository.findAllByOrderByCreatedAtDesc();
 	}
 
-	public PostsPagedOutput allPostsPagedSorted(int page, int size, SortOrder sortOrder, String sortBy) {
+	public PostsPagedOutput allPostsPagedSorted(int page, int size, String sortOrder, String sortBy) {
 		List<Post> posts = postRepositoryPagingSorting.findAll(PageRequest.of(page, size, new Sort(Sort.Direction.fromString(sortOrder.toString()), sortBy))).getContent();
 		int totalPages = postRepositoryPagingSorting.findAll(PageRequest.of(page, size, new Sort(Sort.Direction.fromString(sortOrder.toString()), sortBy))).getTotalPages();
 		return new PostsPagedOutput(posts, totalPages);
+	}
+
+	public Post updatePost(String id, String title, String text, User currentUser) {
+		Post post = postRepository.findById(id).orElseThrow(() -> new IdNotFoundException(id));
+		if (!currentUser.getId().equals(post.getCreator().getId()) && !currentUser.isAdmin()) {
+			throw new GraphQLException("Nicht authorisiert den Artikel zu verändern");
+		}
+		post.setTitle(title);
+		post.setText(text);
+		post.setLastModifier(currentUser);
+		post.setLastModifiedAt(LocalDateTime.now());
+		return postRepository.save(post);
 	}
 }

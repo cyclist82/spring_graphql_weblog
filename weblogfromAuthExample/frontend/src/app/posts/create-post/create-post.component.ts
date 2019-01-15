@@ -21,9 +21,9 @@ export class CreatePostComponent implements OnInit {
   createNewPost(createPostForm: any) {
     this.postService.createNewPost(createPostForm)
       .subscribe((res) => {
-        this.postListService.addPost(res.data['createPost']);
+        // this.postListService.addPost(res.data['createPost']);
         // this.postListService.loadPosts();
-        this.router.navigate(['/posts']);
+        this.router.navigate(['/posts/postsPaged']);
       }, (error) => {
         this.error = error;
       });

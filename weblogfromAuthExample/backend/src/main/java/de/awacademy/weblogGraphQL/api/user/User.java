@@ -28,9 +28,16 @@ public class User {
 	private String password;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creator")
 	private List<Post> posts = new ArrayList<>();
+	private boolean isAdmin = false;
+	private boolean isSuperAdmin = false;
+
+
+
 
 	private LocalDateTime createdAt;
 	private LocalDateTime modifiedAt;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+//	private List<File> files = new ArrayList<>();
 
 	public User() {
 		this.id = UUID.randomUUID().toString();
@@ -93,4 +100,28 @@ public class User {
 		return modifiedAt;
 	}
 
+//	public List<File> getFiles() {
+//		return files;
+//	}
+//
+//	public void setFiles(List<File> files) {
+//		this.files = files;
+//	}
+
+
+	public boolean isAdmin() {
+		return isAdmin;
+	}
+
+	public void setAdmin(boolean admin) {
+		isAdmin = admin;
+	}
+
+	public boolean isSuperAdmin() {
+		return isSuperAdmin;
+	}
+
+	public void setSuperAdmin(boolean superAdmin) {
+		isSuperAdmin = superAdmin;
+	}
 }

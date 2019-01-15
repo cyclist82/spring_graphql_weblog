@@ -5,4 +5,6 @@ export interface User {
   username: String;
   email: String;
   posts: Post[];
+  admin: boolean;
+  superAdmin: boolean;
 }

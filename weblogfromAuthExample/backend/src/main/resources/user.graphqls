@@ -22,7 +22,7 @@ type Query {
     verify(token: String!): UserAuth!
     login(credentials: CredentialsInput!): UserAuth!
     allPosts: [Post]!
-    allPostsSorted(page: Int!, size: Int!, sortOrder: SortOrder!, sortBy: String!): PostsPagedOutput!
+    allPostsSorted(page: Int!, size: Int!, sortOrder: String!, sortBy: String!): PostsPagedOutput!
 }
 
 type Mutation {
@@ -30,6 +30,8 @@ type Mutation {
     update(id: String!, username: String!, email: String!, passwordOld: String!, password: String): User
     delete(id: String!): User!
     createPost(title: String!, text: String!): Post!
+    #    uploadFile(multipartFile: MultipartFile!, postId: ID!): File!
+    updatePost(id: ID!, title: String!, text: String!): Post!
 }
 
 type User {
@@ -39,6 +41,8 @@ type User {
     createdAt: LocalDateTime!
     modifiedAt: LocalDateTime
     posts: [Post]!
+    admin: Boolean!
+    superAdmin: Boolean!
 }
 
 type UserAuth {

@@ -4,13 +4,9 @@
 <form #createPostForm="ngForm" (ngSubmit)="createNewPost(createPostForm.value)"
       class="text-center border border-light p-5">
 
-  <p class="h4 mb-4">Contact us</p>
-
-  <!--Title-->
+  <p class="h4 mb-4">Neuer Artikel</p>
   <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Titel" required ngModel
          name="title" #title="ngModel">
-
-  <!-- Text -->
   <div class="form-group">
     <textarea #text="ngModel" ngModel name="text" required class="form-control rounded-0"
               id="exampleFormControlTextarea2" rows="7" placeholder="Message"></textarea>
@@ -24,7 +20,6 @@
   <div *ngIf="error" class="alert alert-danger" role="alert">
     {{error.toString() | graphqlerror}}
   </div>
-  <!-- Send button -->
   <button class="btn btn-info btn-block" type="submit" [disabled]="createPostForm.invalid">Send</button>
 
 </form>

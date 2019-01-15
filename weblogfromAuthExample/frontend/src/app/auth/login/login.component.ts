@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
       this.dataLoading = false;
       window.localStorage.setItem('token', res.data['login'].token);
       this.security.setCurrentUser(res.data['login'].user);
-      this.router.navigate(['/']);
+      this.router.navigate(['/posts/postsPaged']);
     }, (error) => {
       this.error = error;
       console.log(error);

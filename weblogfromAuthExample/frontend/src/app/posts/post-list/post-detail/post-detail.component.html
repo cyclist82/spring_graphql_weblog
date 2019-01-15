@@ -9,18 +9,51 @@
   </div>
   <!-- Card content -->
   <div class="card-body">
+    <div *ngIf="currentUser" class="btn-group pull-right" role="group" aria-label="Basic example">
+      <ng-container *ngIf="post.creator.id===currentUser.id || currentUser.admin">
+        <button *ngIf="!editMode" mdbBtn type="button" color="primary"
+                class="waves-light p-3" mdbWavesEffect
+                (click)="enterEditMode()">
+          <i class="fa fa-edit"></i>
+        </button>
+        <button *ngIf="editMode" mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
+        (click)="savePost()"><i
+          class="fa fa-save"></i>
+        </button>
+        <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect><i class="fa fa-trash"></i>
+        </button>
+      </ng-container>
 
-    <!-- Title -->
-    <h4 class="card-title">{{post.title}}</h4>
-    <p class="card-text">{{post.creator.username}}</p>
-    <p class="card-text"><i class="fa fa-clock-o"></i> {{post.createdAt | customTime}}  <i
-      class="fa fa-calendar"></i> {{post.createdAt | customDate}}</p>
-    <p *ngIf="post.lastModifiedAt" class="card-text"><i class="fa fa-clock-o"></i> {{post.lastModifiedAt | customTime}}  <i
-      class="fa fa-calendar"></i> {{post.lastModifiedAt | customDate}}</p>
-    <!-- Text -->
-    <p class="card-text">{{post.text}}</p>
-    <!-- Button -->
-    <a href="#" class="btn btn-primary">Button</a>
+      <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect><i class="fa fa-history"></i>
+      </button>
+    </div>
+    <ngContainer *ngIf="!editMode">
+      <p class="card-text"><i class="fa fa-clock-o"></i> {{post.createdAt | customTime}} <i
+        class="fa fa-calendar"></i> {{post.createdAt | customDate}} von {{post.creator.username}}</p>
+      <p *ngIf="post.lastModifiedAt" class="card-text">Zuletzt bearbeitet: <i
+        class="fa fa-clock-o"></i> {{post.lastModifiedAt | customTime}}
+        <i class="fa fa-calendar">
+        </i> {{post.lastModifiedAt | customDate}} von {{post.lastModifier.username}}</p>
+      <h4 class="card-title">{{post.title}}</h4>
+      <p class="card-text">{{post.text}}</p>
+    </ngContainer>
+    <ng-container *ngIf="editMode">
+      <form [formGroup]="editPostForm"
+            class="text-center border border-light p-5">
+        <p class="h4 mb-4">Artikel editieren</p>
+        <input type="text" id="defaultContactFormName" class="form-control mb-4" placeholder="Titel" required
+               name="title" formControlName="title">
+        <div class="form-group">
+    <textarea formControlName="text" name="text" required class="form-control rounded-0"
+              id="exampleFormControlTextarea2" rows="7" placeholder="Message"></textarea>
+        </div>
+        <div *ngIf="error" class="alert alert-danger" role="alert">
+          {{error.toString() | graphqlerror}}
+        </div>
+      </form>
+
+    </ng-container>
+
 
   </div>
 

@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-7 mt-3">
+      <div class="col-12">
+        <nav id="pageNavigation" aria-label="Page navigation example">
+          <ul class="pagination pg-blue justify-content-center">
+            <!--<li class="page-item"><a class="page-link disabled">{{amountPages}} Seiten: </a></li>-->
+            <li *ngIf="pages.length<amountPages && page>1" class="page-item"><a class="page-link" mdbWavesEffect
+                                                                                 (click)="page=0; loadPagedPosts()">Erste</a>
+            </li>
+            <li *ngIf="page>0" class="page-item"><a class="page-link" mdbWavesEffect
+                                                    (click)="pageBefore()">Vorherige</a>
+            </li>
+            <li *ngFor="let indexPage of pages" class="page-item" ngClass="{{page+1===indexPage?'active':''}}"><a
+              class="page-link"
+              mdbWavesEffect
+              (click)="setPage(indexPage)">{{indexPage}}</a>
+            </li>
+            <li *ngIf="page<amountPages-1" class="page-item">
+              <a class="page-link" mdbWavesEffect (click)="pageAfter()">Nächste</a>
+            </li>
+            <li *ngIf="pages.length<amountPages && page<amountPages-2" class="page-item"><a class="page-link"
+                                                                                             mdbWavesEffect
+                                                                                             (click)="page=amountPages-1; loadPagedPosts()">Letzte</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+      <div class="col-lg-6 offset-lg-3">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="selectPostPerPage">Artikel pro Seite: </label>
+          </div>
+          <select [(ngModel)]="postsPerPage" (ngModelChange)="page=0; loadPagedPosts()" id="selectPostPerPage"
+                  class="custom-select">
+            <option value="1" selected>1</option>
+            <option value="2" selected>2</option>
+            <option value="3" selected>3</option>
+            <option value="4" selected>4</option>
+            <option value="5" selected>5</option>
+            <option value="6" selected>6</option>
+            <option value="7" selected>7</option>
+            <option value="8" selected>8</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="col-12 input-group mt-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="selectSortBy">Sortieren nach: </label>
+        </div>
+        <select [(ngModel)]="sortBy" (ngModelChange)="loadPagedPosts()" id="selectSortBy"
+                class="custom-select">
+          <option value="createdAt" selected>Erstellungsdatum</option>
+          <option value="lastModifiedAt">Zuletzt bearbeitet</option>
+          <option value="creator">Autor</option>
+          <option value="title">Titel</option>
+        </select>
+      </div>
+      <div class="col-12 input-group mt-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="selectSortOrder">Sortierrichtung: </label>
+        </div>
+        <select [(ngModel)]="sortOrder" (ngModelChange)="loadPagedPosts()" id="selectSortOrder"
+                class="custom-select">
+          <option value="DESC" selected>Absteigend</option>
+          <option value="ASC">Aufsteigend</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-container *ngIf="posts">
+  <div class="row mt-3">
+    <div class="col-md-6 my-3" *ngFor="let post of posts">
+      <app-post-detail [post]="post" [currentUser]="currentUser"></app-post-detail>
+    </div>
+  </div>
+</ng-container>

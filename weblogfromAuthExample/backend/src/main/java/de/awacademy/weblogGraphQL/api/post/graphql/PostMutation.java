@@ -24,4 +24,9 @@ public class PostMutation implements GraphQLMutationResolver {
 		Post post = new Post(title, text, creator);
 		return dao.create(post);
 	}
+
+	public Post updatePost(String id, String title, String text) {
+		User currentUser = securityGraphQLAspect.getCurrentUser();
+		return dao.updatePost(id,title,text, currentUser);
+	}
 }

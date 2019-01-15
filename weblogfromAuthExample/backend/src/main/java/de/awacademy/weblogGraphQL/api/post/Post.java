@@ -22,6 +22,8 @@ public class Post {
 	private LocalDateTime lastModifiedAt;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User lastModifier;
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+//	private List<File> files = new ArrayList<>();
 
 	public Post() {
 		this.id = UUID.randomUUID().toString();
@@ -79,4 +81,12 @@ public class Post {
 	public void setLastModifier(User lastModifier) {
 		this.lastModifier = lastModifier;
 	}
+
+//	public List<File> getFiles() {
+//		return files;
+//	}
+//
+//	public void setFiles(List<File> files) {
+//		this.files = files;
+//	}
 }

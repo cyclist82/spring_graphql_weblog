@@ -16,6 +16,8 @@ const loginUser = gql`query userQueries($email: String!,$password: String!) {
       id
       username
       email
+      admin
+      superAdmin
     }
   }
 }`;
@@ -27,6 +29,8 @@ const verifyUser = gql`query verifyUserQuery($token: String!){
       id
       username
       email
+      admin
+      superAdmin
     }
   }
 }`;

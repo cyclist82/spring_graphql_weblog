@@ -23,6 +23,15 @@ public class PostResolver implements GraphQLResolver<Post> {
 
 	@Unsecured
 	public User getLastModifier(Post post) {
-		return userRepository.findById(post.getLastModifier().getId()).get();
+		if(post.getLastModifier()!=null){
+			return userRepository.findById(post.getLastModifier().getId()).get();
+		}
+		return null;
 	}
+
+//	@Unsecured
+//	public List<File> getFiles(Post post) {
+//		return post.getFiles();
+//	}
+
 }
