@@ -30,8 +30,9 @@ type Mutation {
     update(id: String!, username: String!, email: String!, passwordOld: String!, password: String): User
     delete(id: String!): User!
     createPost(title: String!, text: String!): Post!
-    #    uploadFile(multipartFile: MultipartFile!, postId: ID!): File!
+#    saveFile(multipartFile: MultipartFile!, postId: ID!): File!
     updatePost(id: ID!, title: String!, text: String!): Post!
+    deletePost(id: ID!): Boolean
 }
 
 type User {
@@ -73,4 +74,11 @@ type Post {
 type PostsPagedOutput {
     posts: [Post]!
     amountPages: Int!
+}
+
+type File {
+    id: ID!
+    fileName: String!
+    fileType: String!
+
 }

@@ -13,7 +13,7 @@ public class FileMutation implements GraphQLMutationResolver {
 		this.fileStorageService = fileStorageService;
 	}
 
-	public File uploadFile(MultipartFile multipartFile, String postId){
+	public File saveFile(MultipartFile multipartFile, String postId){
 		return fileStorageService.saveFile(multipartFile, postId);
 	}
 }

@@ -1,8 +1,6 @@
 package de.awacademy.weblogGraphQL.api.post;
 
-import de.awacademy.weblogGraphQL.api.API;
 import de.awacademy.weblogGraphQL.api.post.graphql.PostsPagedOutput;
-import de.awacademy.weblogGraphQL.api.post.graphql.input.PostInput;
 import de.awacademy.weblogGraphQL.api.user.User;
 import de.awacademy.weblogGraphQL.services.graphql.exceptions.IdNotFoundException;
 import graphql.GraphQLException;
@@ -14,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Component
-public class PostDao implements API<Post, PostInput> {
+public class PostDao {
 
 	private PostRepositoryPagingSorting postRepositoryPagingSorting;
 	private PostRepository postRepository;
@@ -24,22 +22,19 @@ public class PostDao implements API<Post, PostInput> {
 		this.postRepository = postRepository;
 	}
 
-	@Override
 	public Post create(Post post) {
 		return postRepository.save(post);
 	}
 
-	@Override
-	public Post delete(String id) {
-		return null;
+	public boolean deletePost(String id) {
+		postRepository.deleteById(id);
+		return true;
 	}
 
-	@Override
-	public Post get(String id) {
-		return null;
+	public Post getPost(String id) {
+		return postRepository.findById(id).orElseThrow(() -> new IdNotFoundException("Post konnnte nicht gefunden werden"));
 	}
 
-	@Override
 	public List<Post> all() {
 		return postRepository.findAllByOrderByCreatedAtDesc();
 	}

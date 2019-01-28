@@ -7,7 +7,7 @@ import {UpdateUserComponent} from './auth/update-user/update-user.component';
 import {AuthGuard} from './auth/auth-services/auth.guard';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'posts', pathMatch: 'full'},
+  {path: '', redirectTo: 'posts/postsPaged', pathMatch: 'full'},
   {path: 'login', component: LoginComponent},
   {path: 'signup', component: SignupComponent},
   {path: 'editUser', component: UpdateUserComponent, canActivate: [AuthGuard]},

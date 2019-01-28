@@ -6,7 +6,7 @@
           <ul class="pagination pg-blue justify-content-center">
             <!--<li class="page-item"><a class="page-link disabled">{{amountPages}} Seiten: </a></li>-->
             <li *ngIf="pages.length<amountPages && page>1" class="page-item"><a class="page-link" mdbWavesEffect
-                                                                                 (click)="page=0; loadPagedPosts()">Erste</a>
+                                                                                (click)="page=0; loadPagedPosts()">Erste</a>
             </li>
             <li *ngIf="page>0" class="page-item"><a class="page-link" mdbWavesEffect
                                                     (click)="pageBefore()">Vorherige</a>
@@ -20,8 +20,8 @@
               <a class="page-link" mdbWavesEffect (click)="pageAfter()">Nächste</a>
             </li>
             <li *ngIf="pages.length<amountPages && page<amountPages-2" class="page-item"><a class="page-link"
-                                                                                             mdbWavesEffect
-                                                                                             (click)="page=amountPages-1; loadPagedPosts()">Letzte</a>
+                                                                                            mdbWavesEffect
+                                                                                            (click)="page=amountPages-1; loadPagedPosts()">Letzte</a>
             </li>
           </ul>
         </nav>
@@ -74,8 +74,9 @@
 
 <ng-container *ngIf="posts">
   <div class="row mt-3">
-    <div class="col-md-6 my-3" *ngFor="let post of posts">
-      <app-post-detail [post]="post" [currentUser]="currentUser"></app-post-detail>
+    <div class="col-12 my-3" *ngFor="let post of posts; index as i">
+      <app-post-detail [post]="post" [currentUser]="currentUser" (updatePosts)="loadPagedPosts()"
+                       [indexOfPost]="i"></app-post-detail>
     </div>
   </div>
 </ng-container>

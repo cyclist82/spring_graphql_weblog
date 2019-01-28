@@ -32,6 +32,32 @@ const createNewPost_M = gql`
     }
   }`;
 
+const updatePost_M = gql`
+  mutation updateExistingPost($id: ID!, $title: String!, $text: String!) {
+    updatePost(id: $id, title: $title, text: $text) {
+      id
+      title
+      text
+      createdAt
+      lastModifiedAt
+      creator{
+        id
+        username
+      }
+      lastModifier{
+        id
+        username
+      }
+    }
+  }
+`;
+
+const deletePost_M = gql`
+  mutation  deletePost($id: ID!){
+    deletePost(id: $id)
+  }
+`;
+
 @Injectable({
   providedIn: 'root'
 })
@@ -52,6 +78,26 @@ export class PostService {
       variables: {
         title: formData.title,
         text: formData.text,
+      }
+    });
+  }
+
+  updatePost(formData) {
+    return this.apollo.mutate({
+      mutation: updatePost_M,
+      variables: {
+        id: formData.id,
+        title: formData.title,
+        text: formData.text,
+      }
+    });
+  }
+
+  deletePost(id) {
+    return this.apollo.mutate({
+      mutation: deletePost_M,
+      variables: {
+        id: id,
       }
     });
   }

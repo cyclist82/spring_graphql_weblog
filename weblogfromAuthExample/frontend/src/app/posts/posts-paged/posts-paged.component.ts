@@ -5,6 +5,7 @@ import {HttpClient} from '@angular/common/http';
 import gql from 'graphql-tag';
 import {User} from '../../models/user.model';
 import {SecurityService} from '../../services/security.service';
+import {PostPagedService} from './post-paged.service';
 
 
 const getPostsSorted_Q = gql`
@@ -45,8 +46,7 @@ export class PostsPagedComponent implements OnInit {
   sortBy: String = 'createdAt';
   sortOrder: String = 'DESC';
 
-
-  constructor(private apollo: Apollo, private http: HttpClient, private securityService: SecurityService) {
+  constructor(private postPagedService: PostPagedService, private apollo: Apollo, private http: HttpClient, private securityService: SecurityService) {
   }
 
   ngOnInit() {
@@ -55,27 +55,44 @@ export class PostsPagedComponent implements OnInit {
   }
 
   private loadPagedPosts() {
-    this.apollo.watchQuery({
-      query: getPostsSorted_Q,
-      variables: {
-        page: this.page,
-        size: this.postsPerPage,
-        sortOrder: this.sortOrder,
-        sortBy: this.sortBy,
-      }
-    }).valueChanges
-      .subscribe((res) => {
-        this.posts = res.data['allPostsSorted'].posts;
-        this.amountPages = res.data['allPostsSorted'].amountPages;
-        this.pages = [];
-        for (let i = this.page - 1; i <= this.page + 3; i++) {
-          if (i > 0 && i <= this.amountPages) {
-            this.pages.push(i);
-          }
+    // this.apollo.watchQuery({
+    //   query: getPostsSorted_Q,
+    //   variables: {
+    //     page: this.page,
+    //     size: this.postsPerPage,
+    //     sortOrder: this.sortOrder,
+    //     sortBy: this.sortBy,
+    //   }
+    // }).valueChanges
+    //   .subscribe((res) => {
+    //     this.posts = res.data['allPostsSorted'].posts;
+    //     this.amountPages = res.data['allPostsSorted'].amountPages;
+    //     this.pages = [];
+    //     for (let i = this.page - 1; i <= this.page + 3; i++) {
+    //       if (i > 0 && i <= this.amountPages) {
+    //         this.pages.push(i);
+    //       }
+    //     }
+    //   }, (error) => {
+    //     console.log(error);
+    //   });
+    this.postPagedService.loadPagedPosts(this.page, this.postsPerPage, this.sortBy, this.sortOrder);
+    this.postPagedService.amountPages$.subscribe((res) => {
+      this.amountPages = res;
+      this.pages = [];
+      for (let i = this.page - 1; i <= this.page + 3; i++) {
+        if (i > 0 && i <= this.amountPages) {
+          this.pages.push(i);
         }
-      }, (error) => {
-        console.log(error);
-      });
+      }
+    }, (error) => {
+      console.log(error);
+    });
+    this.postPagedService.posts$.subscribe((res) => {
+      this.posts = res;
+    }, (error) => {
+      console.log(error);
+    });
   }
 
   private loadCurrentUser() {

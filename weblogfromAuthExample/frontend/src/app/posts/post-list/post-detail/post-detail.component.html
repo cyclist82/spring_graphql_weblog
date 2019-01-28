@@ -17,10 +17,11 @@
           <i class="fa fa-edit"></i>
         </button>
         <button *ngIf="editMode" mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
-        (click)="savePost()"><i
+                (click)="updatePost()"><i
           class="fa fa-save"></i>
         </button>
-        <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect><i class="fa fa-trash"></i>
+        <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
+                (click)="deletePost(post.id)"><i class="fa fa-trash"></i>
         </button>
       </ng-container>
 
@@ -51,7 +52,6 @@
           {{error.toString() | graphqlerror}}
         </div>
       </form>
-
     </ng-container>
 
 

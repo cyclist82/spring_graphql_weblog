@@ -5,6 +5,7 @@ import de.awacademy.weblogGraphQL.api.post.Post;
 import de.awacademy.weblogGraphQL.api.post.PostDao;
 import de.awacademy.weblogGraphQL.api.user.User;
 import de.awacademy.weblogGraphQL.services.security.SecurityGraphQLAspect;
+import graphql.GraphQLException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,6 +28,16 @@ public class PostMutation implements GraphQLMutationResolver {
 
 	public Post updatePost(String id, String title, String text) {
 		User currentUser = securityGraphQLAspect.getCurrentUser();
-		return dao.updatePost(id,title,text, currentUser);
+		return dao.updatePost(id, title, text, currentUser);
+	}
+
+	public boolean deletePost(String id) {
+		User currentUser = securityGraphQLAspect.getCurrentUser();
+		Post post = dao.getPost(id);
+		if(!currentUser.isAdmin()){
+			throw new GraphQLException("Benutzer ist nicht berechtigt diesen Post zu löschen");
+		}
+		dao.deletePost(id);
+		return true;
 	}
 }

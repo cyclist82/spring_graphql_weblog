@@ -35,4 +35,8 @@ export class PostListService implements OnInit {
     this.posts$.next(updatedValue);
     console.log(this.posts$.value);
   }
+
+  deletePost(id: String){
+
+  }
 }

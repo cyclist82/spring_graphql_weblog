@@ -1,7 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Post} from '../../../models/post.model';
 import {User} from '../../../models/user.model';
 import {FormControl, FormGroup} from '@angular/forms';
+import {PostService} from '../../../services/post.service';
+import {error} from 'selenium-webdriver';
+import {PostPagedService} from '../../posts-paged/post-paged.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -12,6 +15,7 @@ export class PostDetailComponent implements OnInit {
 
   @Input() post: Post;
   @Input() currentUser: User;
+  @Input() indexOfPost: number;
   editMode = false;
   editPostForm = new FormGroup({
     id: new FormControl(''),
@@ -19,8 +23,9 @@ export class PostDetailComponent implements OnInit {
     text: new FormControl(''),
   });
   error: any;
+  @Output() updatePosts: EventEmitter<any> = new EventEmitter();
 
-  constructor() {
+  constructor(private postService: PostService, private postPagedService: PostPagedService) {
   }
 
   ngOnInit() {
@@ -33,7 +38,23 @@ export class PostDetailComponent implements OnInit {
     this.editPostForm.controls['text'].setValue(this.post.text);
   }
 
-  savePost() {
+  updatePost() {
+    this.postService.updatePost(this.editPostForm.value)
+      .subscribe((res) => {
+        this.editMode = false;
+        this.postPagedService.updatePost(this.indexOfPost, res.data.updatePost);
+      }, (error) => {
+        console.log(error);
+      });
+  }
+
+  deletePost(id: String) {
+    this.postService.deletePost(id).subscribe((res) => {
+      console.log(res);
+      this.updatePosts.emit(null);
+    }, (error) => {
+      console.log(error);
+    });
 
   }
 }
