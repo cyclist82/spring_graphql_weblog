@@ -6,6 +6,7 @@ import {CreatePostComponent} from '../../create-post/create-post.component';
 import {PostListComponent} from '../../post-list/post-list.component';
 import {AuthGuard} from '../../../auth/auth-services/auth.guard';
 import {PostsPagedComponent} from '../../posts-paged/posts-paged.component';
+import {PostHistoryComponent} from '../../post-history/post-history.component';
 
 const postRoutes: Routes = [
   {
@@ -14,6 +15,7 @@ const postRoutes: Routes = [
       {path: '', component: PostListComponent},
       {path: 'postsPaged', component: PostsPagedComponent},
       {path: 'new', component: CreatePostComponent, canActivate: [AuthGuard]},
+      {path: ':id/history', component: PostHistoryComponent},
     ]
   },
 ];

@@ -1,6 +1,8 @@
 package de.awacademy.weblogGraphQL.api.post;
 
 import de.awacademy.weblogGraphQL.api.post.graphql.PostsPagedOutput;
+import de.awacademy.weblogGraphQL.api.postOld.PostOld;
+import de.awacademy.weblogGraphQL.api.postOld.PostOldRepository;
 import de.awacademy.weblogGraphQL.api.user.User;
 import de.awacademy.weblogGraphQL.services.graphql.exceptions.IdNotFoundException;
 import graphql.GraphQLException;
@@ -16,10 +18,12 @@ public class PostDao {
 
 	private PostRepositoryPagingSorting postRepositoryPagingSorting;
 	private PostRepository postRepository;
+	private PostOldRepository postOldRepository;
 
-	public PostDao(PostRepositoryPagingSorting postRepositoryPagingSorting, PostRepository postRepository) {
+	public PostDao(PostRepositoryPagingSorting postRepositoryPagingSorting, PostRepository postRepository, PostOldRepository postOldRepository) {
 		this.postRepositoryPagingSorting = postRepositoryPagingSorting;
 		this.postRepository = postRepository;
+		this.postOldRepository = postOldRepository;
 	}
 
 	public Post create(Post post) {
@@ -50,6 +54,8 @@ public class PostDao {
 		if (!currentUser.getId().equals(post.getCreator().getId()) && !currentUser.isAdmin()) {
 			throw new GraphQLException("Nicht authorisiert den Artikel zu verändern");
 		}
+		PostOld postOld= new PostOld(post.getTitle(), post.getText(), post);
+		postOldRepository.save(postOld);
 		post.setTitle(title);
 		post.setText(text);
 		post.setLastModifier(currentUser);

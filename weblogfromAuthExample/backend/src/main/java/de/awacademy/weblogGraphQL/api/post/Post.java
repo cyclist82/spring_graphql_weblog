@@ -1,12 +1,12 @@
 package de.awacademy.weblogGraphQL.api.post;
 
+import de.awacademy.weblogGraphQL.api.postOld.PostOld;
 import de.awacademy.weblogGraphQL.api.user.User;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -22,6 +22,9 @@ public class Post {
 	private LocalDateTime lastModifiedAt;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User lastModifier;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	private List<PostOld> oldPosts = new ArrayList<>();
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 //	private List<File> files = new ArrayList<>();
 
@@ -89,4 +92,13 @@ public class Post {
 //	public void setFiles(List<File> files) {
 //		this.files = files;
 //	}
+
+
+	public List<PostOld> getOldPosts() {
+		return oldPosts;
+	}
+
+	public void setOldPosts(List<PostOld> oldPosts) {
+		this.oldPosts = oldPosts;
+	}
 }

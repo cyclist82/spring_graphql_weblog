@@ -33,6 +33,8 @@ import {GraphqlerrorPipe} from './helpers/graphqlerror.pipe';
 import { CustomTimePipe } from './helpers/custom-time.pipe';
 import { UpdateUserComponent } from './auth/update-user/update-user.component';
 import { PostsPagedComponent } from './posts/posts-paged/posts-paged.component';
+import { PostHistoryComponent } from './posts/post-history/post-history.component';
+import { HistoryDetailComponent } from './posts/post-history/history-detail/history-detail.component';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -75,6 +77,8 @@ export function createApollo(httpLink: HttpLink) {
     CustomTimePipe,
     UpdateUserComponent,
     PostsPagedComponent,
+    PostHistoryComponent,
+    HistoryDetailComponent,
   ],
   imports: [
     CommonModule,

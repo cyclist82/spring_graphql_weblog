@@ -29,4 +29,9 @@ public class PostQuery implements GraphQLQueryResolver {
 	public PostsPagedOutput allPostsSorted(Integer page, Integer size, String sortOrder, String sortBy) {
 		return dao.allPostsPagedSorted(page, size, sortOrder, sortBy);
 	}
+
+	@Unsecured
+	public Post getPost(String id) {
+		return dao.getPost(id);
+	}
 }

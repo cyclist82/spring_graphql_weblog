@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {Post} from '../../models/post.model';
 import {Apollo} from 'apollo-angular';
-import {HttpClient} from '@angular/common/http';
 import gql from 'graphql-tag';
-import {User} from '../../models/user.model';
 
 const getPostsSorted_Q = gql`
   query getPostsSorted($page: Int!, $size: Int!, $sortOrder: String!, $sortBy: String!) {

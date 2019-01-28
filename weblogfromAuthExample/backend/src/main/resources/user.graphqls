@@ -23,6 +23,7 @@ type Query {
     login(credentials: CredentialsInput!): UserAuth!
     allPosts: [Post]!
     allPostsSorted(page: Int!, size: Int!, sortOrder: String!, sortBy: String!): PostsPagedOutput!
+    getPost(id: ID!): Post!
 }
 
 type Mutation {
@@ -30,7 +31,7 @@ type Mutation {
     update(id: String!, username: String!, email: String!, passwordOld: String!, password: String): User
     delete(id: String!): User!
     createPost(title: String!, text: String!): Post!
-#    saveFile(multipartFile: MultipartFile!, postId: ID!): File!
+    # saveFile(multipartFile: MultipartFile!, postId: ID!): File!
     updatePost(id: ID!, title: String!, text: String!): Post!
     deletePost(id: ID!): Boolean
 }
@@ -69,6 +70,7 @@ type Post {
     createdAt: LocalDateTime!
     lastModifiedAt: LocalDateTime
     lastModifier: User
+    oldPosts: [OldPost]!
 }
 
 type PostsPagedOutput {
@@ -80,5 +82,12 @@ type File {
     id: ID!
     fileName: String!
     fileType: String!
+}
 
+type OldPost {
+    id: ID!
+    title: String!
+    text: String!
+    post: Post!
+    savedAt: LocalDateTime!
 }

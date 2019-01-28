@@ -1,4 +1,5 @@
 import {User} from './user.model';
+import {OldPost} from './oldPost.model';
 
 export interface Post {
   id: String;
@@ -8,4 +9,5 @@ export interface Post {
   createdAt: Date;
   lastModifiedAt: Date;
   lastModifier: User;
+  oldPosts: OldPost[];
 }
