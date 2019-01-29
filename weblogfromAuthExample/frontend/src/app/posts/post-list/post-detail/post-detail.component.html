@@ -1,36 +1,61 @@
 <ng-container *ngIf="post">
   <!-- Card -->
   <div class="card">
-
-    <!-- Card image -->
-    <div class="view overlay">
-      <img class="card-img-top" src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
-           alt="Card image cap">
-      <div class="mask rgba-white-slight">{{post.title}}</div>
-    </div>
     <!-- Card content -->
     <div class="card-body">
-      <div *ngIf="currentUser" class="btn-group pull-right" role="group" aria-label="Basic example">
-        <ng-container *ngIf="post.creator.id===currentUser.id || currentUser.admin">
+      <img class="embed-responsive pull-right"
+           src="https://mdbootstrap.com/img/Mockups/Lightbox/Thumbnail/img%20(67).jpg"
+           alt="Card image cap">
+      <div class="btn-group mb-3" role="group" aria-label="Basic example">
+        <ng-container *ngIf="currentUser && (post.creator.id===currentUser.id || currentUser.admin)">
           <button *ngIf="!editMode" mdbBtn type="button" color="primary"
                   class="waves-light p-3" mdbWavesEffect
-                  (click)="enterEditMode()">
+                  (click)="enterEditMode()" mdbTooltip="Post editieren" placement="right">
             <i class="fa fa-edit"></i>
           </button>
           <button *ngIf="editMode" mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
                   (click)="updatePost()"><i
-            class="fa fa-save"></i>
+            class="fa fa-save" mdbTooltip="Post speichern" placement="right"></i>
           </button>
-          <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
-                  (click)="deletePost(post.id)"><i class="fa fa-trash"></i>
-          </button>
+          <button type="button" mdbBtn color="primary" class="p-3 waves-light"
+                  (click)="deletePostConfirmModal.show()" mdbWavesEffect><i class="fa fa-trash"></i></button>
+
+          <div mdbModal #deletePostConfirmModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+               aria-labelledby="myBasicModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close pull-right" aria-label="Close" (click)="basicModal.hide()">
+                    <span aria-hidden="true">×</span>
+                  </button>
+                  <h4 class="modal-title w-100" id="myModalLabel">Löschen bestätigen</h4>
+                </div>
+                <div class="modal-body">
+                  Wollen sie den Tost mit dem Titel "{{post.title}}", alle Kommentare und die History definitiv löschen?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close"
+                          (click)="deletePostConfirmModal.hide()" mdbWavesEffect>Lieber nicht
+                  </button>
+                  <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect
+                          (click)="deletePost(post.id)">Löschen
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
         </ng-container>
 
-        <button mdbBtn type="button" color="primary" class="waves-light p-3" mdbWavesEffect
-                routerLink="/posts/{{post.id}}/history"><i class="fa fa-history"></i>
+        <button *ngIf="post.lastModifiedAt && !historyMode" mdbBtn type="button" color="primary" class="waves-light p-3"
+                mdbWavesEffect
+                routerLink="/posts/{{post.id}}/history" mdbTooltip="History anzeigen" placement="right"><i
+          class="fa fa-history"></i>
         </button>
       </div>
       <ngContainer *ngIf="!editMode">
+
         <p class="card-text"><i class="fa fa-clock-o"></i> {{post.createdAt | customTime}} <i
           class="fa fa-calendar"></i> {{post.createdAt | customDate}} von {{post.creator.username}}</p>
         <p *ngIf="post.lastModifiedAt" class="card-text">Zuletzt bearbeitet: <i
@@ -55,9 +80,21 @@
           </div>
         </form>
       </ng-container>
-
-
     </div>
+    <ng-container *ngIf="!historyMode">
+      <div class="text-right">
+        <button *ngIf="!createComment" mdbBtn mdbWavesEffect color="primary" (click)="toggleCreateComment()"
+                class="p-3 mr-3 mb-3">Neuer Kommentar
+        </button>
+      </div>
+      <ng-container *ngIf="createComment">
+        <app-create-comment [postId]="post.id" [postIndex]="indexOfPost"
+                            (cancelComment)="toggleCreateComment()"></app-create-comment>
+      </ng-container>
+      <app-comments-list [comments]="post.commentsPaged" [postIndex]="indexOfPost"
+                         [amountComments]="post.amountComments">
+      </app-comments-list>
+    </ng-container>
     <ng-container *ngIf="post.oldPosts">
       <ng-container *ngFor="let oldPost of post.oldPosts">
         <app-history-detail [oldPost]="oldPost"></app-history-detail>

@@ -10,4 +10,6 @@ export interface Post {
   lastModifiedAt: Date;
   lastModifier: User;
   oldPosts: OldPost[];
+  amountComments: number;
+  commentsPaged: Comment[];
 }

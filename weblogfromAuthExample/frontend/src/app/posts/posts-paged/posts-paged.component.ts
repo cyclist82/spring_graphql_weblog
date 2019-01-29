@@ -7,29 +7,6 @@ import {User} from '../../models/user.model';
 import {SecurityService} from '../../services/security.service';
 import {PostPagedService} from './post-paged.service';
 
-
-const getPostsSorted_Q = gql`
-  query getPostsSorted($page: Int!, $size: Int!, $sortOrder: String!, $sortBy: String!) {
-    allPostsSorted(page: $page, size: $size,sortOrder: $sortOrder, sortBy:  $sortBy) {
-      amountPages
-      posts{id
-        title
-        text
-        createdAt
-        lastModifiedAt
-        creator{
-          id
-          username
-        }
-        lastModifier{
-          id
-          username
-        }
-      }
-    }}
-`;
-
-
 @Component({
   selector: 'app-posts-paged',
   templateUrl: './posts-paged.component.html',
@@ -45,6 +22,8 @@ export class PostsPagedComponent implements OnInit {
   amountPages: number;
   sortBy: String = 'createdAt';
   sortOrder: String = 'DESC';
+  commentSize = 5;
+  commentPage = 0;
 
   constructor(private postPagedService: PostPagedService, private apollo: Apollo, private http: HttpClient, private securityService: SecurityService) {
   }
@@ -55,28 +34,7 @@ export class PostsPagedComponent implements OnInit {
   }
 
   private loadPagedPosts() {
-    // this.apollo.watchQuery({
-    //   query: getPostsSorted_Q,
-    //   variables: {
-    //     page: this.page,
-    //     size: this.postsPerPage,
-    //     sortOrder: this.sortOrder,
-    //     sortBy: this.sortBy,
-    //   }
-    // }).valueChanges
-    //   .subscribe((res) => {
-    //     this.posts = res.data['allPostsSorted'].posts;
-    //     this.amountPages = res.data['allPostsSorted'].amountPages;
-    //     this.pages = [];
-    //     for (let i = this.page - 1; i <= this.page + 3; i++) {
-    //       if (i > 0 && i <= this.amountPages) {
-    //         this.pages.push(i);
-    //       }
-    //     }
-    //   }, (error) => {
-    //     console.log(error);
-    //   });
-    this.postPagedService.loadPagedPosts(this.page, this.postsPerPage, this.sortBy, this.sortOrder);
+    this.postPagedService.loadPagedPosts(this.page, this.postsPerPage, this.sortBy, this.sortOrder, this.commentSize, this.commentPage);
     this.postPagedService.amountPages$.subscribe((res) => {
       this.amountPages = res;
       this.pages = [];
@@ -117,5 +75,10 @@ export class PostsPagedComponent implements OnInit {
   pageBefore() {
     this.page = this.page - 1;
     this.loadPagedPosts();
+  }
+
+  reloadComments(index: number) {
+    const postId = this.posts[index].id;
+    this.postPagedService.reloadComments(index, postId, this.commentSize, this.commentPage);
   }
 }

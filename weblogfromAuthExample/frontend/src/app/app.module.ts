@@ -35,6 +35,9 @@ import { UpdateUserComponent } from './auth/update-user/update-user.component';
 import { PostsPagedComponent } from './posts/posts-paged/posts-paged.component';
 import { PostHistoryComponent } from './posts/post-history/post-history.component';
 import { HistoryDetailComponent } from './posts/post-history/history-detail/history-detail.component';
+import { CreateCommentComponent } from './comment/create-comment/create-comment.component';
+import { ShowCommentComponent } from './comment/show-comment/show-comment.component';
+import { CommentsListComponent } from './comment/comments-list/comments-list.component';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -79,6 +82,9 @@ export function createApollo(httpLink: HttpLink) {
     PostsPagedComponent,
     PostHistoryComponent,
     HistoryDetailComponent,
+    CreateCommentComponent,
+    ShowCommentComponent,
+    CommentsListComponent,
   ],
   imports: [
     CommonModule,

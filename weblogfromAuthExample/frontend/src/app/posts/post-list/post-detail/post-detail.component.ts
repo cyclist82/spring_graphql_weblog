@@ -16,6 +16,8 @@ export class PostDetailComponent implements OnInit {
   @Input() post: Post;
   @Input() currentUser: User;
   @Input() indexOfPost: number;
+  @Input() historyMode: boolean;
+  createComment = false;
   editMode = false;
   editPostForm = new FormGroup({
     id: new FormControl(''),
@@ -55,6 +57,9 @@ export class PostDetailComponent implements OnInit {
     }, (error) => {
       console.log(error);
     });
+  }
 
+  toggleCreateComment() {
+    this.createComment = !this.createComment;
   }
 }

@@ -1,5 +1,6 @@
 package de.awacademy.weblogGraphQL.api.post;
 
+import de.awacademy.weblogGraphQL.api.comment.Comment;
 import de.awacademy.weblogGraphQL.api.postOld.PostOld;
 import de.awacademy.weblogGraphQL.api.user.User;
 
@@ -23,8 +24,10 @@ public class Post {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User lastModifier;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
 	private List<PostOld> oldPosts = new ArrayList<>();
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
+	private List<Comment> comments = new ArrayList<>();
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 //	private List<File> files = new ArrayList<>();
 

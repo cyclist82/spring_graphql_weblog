@@ -31,9 +31,12 @@ type Mutation {
     update(id: String!, username: String!, email: String!, passwordOld: String!, password: String): User
     delete(id: String!): User!
     createPost(title: String!, text: String!): Post!
-    # saveFile(multipartFile: MultipartFile!, postId: ID!): File!
     updatePost(id: ID!, title: String!, text: String!): Post!
     deletePost(id: ID!): Boolean
+    createComment(postId: ID!, text: String): Comment!
+    #    saveFile(multipartFile: MultipartFile!, postId: ID!): File!
+    deleteComment(id: ID!): Boolean
+
 }
 
 type User {
@@ -71,6 +74,9 @@ type Post {
     lastModifiedAt: LocalDateTime
     lastModifier: User
     oldPosts: [OldPost]!
+    amountComments: Int
+    comments: [Comment]!
+    commentsPaged(page: Int, size: Int): [Comment]!
 }
 
 type PostsPagedOutput {
@@ -91,3 +97,17 @@ type OldPost {
     post: Post!
     savedAt: LocalDateTime!
 }
+
+type Comment {
+    id: ID!
+    text: String!
+    post: Post!
+    createTime: LocalDateTime!
+    creator: User!
+}
+
+#type MultipartFile {
+#    name: String
+#    originalFilename: String
+#    contentType: String
+#}
