@@ -1,0 +1,14 @@
+<div class="container my-2">
+  <div class="card">
+    <div class="card-body py-2">
+      <button class="pull-right" color="primary" mdbWavesEffect mdbBtn
+              *ngIf="currentUser && (currentUser.admin || currentUser.id == comment.creator.id)"
+              (click)="onDeleteComment(comment.id)"><i class="fa fa-trash"></i>
+      </button>
+      <p class="card-text"><i class="fa fa-clock-o"></i> {{comment.createTime | customTime}} <i
+        class="fa fa-calendar"></i> {{comment.createTime | customDate}} von {{comment.creator.username}}</p>
+      <p class="card-text">{{comment.text}}</p>
+
+    </div>
+  </div>
+</div>

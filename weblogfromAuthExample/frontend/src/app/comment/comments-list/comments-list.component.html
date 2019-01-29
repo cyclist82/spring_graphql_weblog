@@ -1,0 +1,7 @@
+<div class="container" *ngIf="comments.length>0">
+  <h3 class="ml-3">Kommentare:</h3>
+  <app-show-comment *ngFor="let comment of comments" [comment]="comment" [postIndex]="postIndex"></app-show-comment>
+  <button *ngIf="amountComments>comments.length" mdbBtn mdbWavesEffect (click)="loadMoreComments()">Mehr Kommentare
+    laden
+  </button>
+</div>

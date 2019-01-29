@@ -1,0 +1,16 @@
+<div class="container mb-3">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text">Neuer Kommentar <span
+        *ngIf="text.length<3">bitte mindestens 3 Zeichen</span></span>
+    </div>
+    <textarea #commentText class="form-control" [(ngModel)]="text" aria-label="With textarea" required
+              minlength="3"></textarea>
+    <div class="input-group-prepend">
+      <button class="p-3 my-auto" mdbBtn color="primary" mdbWavesEffect (click)="onCreateComment()"
+              [disabled]="!commentText.checkValidity()"><i class="fa fa-paper-plane"></i></button>
+      <button class="p-3 my-auto" mdbBtn color="primary" mdbWavesEffect (click)="cancelCreateComment()"><i
+        class="fa fa-close"></i></button>
+    </div>
+  </div>
+</div>
