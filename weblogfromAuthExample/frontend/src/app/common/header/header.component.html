@@ -2,38 +2,26 @@
 <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark indigo">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" routerLink="/posts">Navbar</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" routerLink="/posts/postsPaged">Navbar</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
     <!-- Links -->
     <ul class="navbar-nav mr-auto">
+      <!--<li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">-->
+        <!--<a class="nav-link waves-light" routerLink="posts">Artikel</a>-->
+      <!--</li>-->
       <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a class="nav-link waves-light" routerLink="posts">Artikel</a>
+        <a class="nav-link waves-light" routerLink="posts/postsPaged">Artikel</a>
       </li>
-      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        <a class="nav-link waves-light" routerLink="posts/postsPaged">Artikel Seiten</a>
-      </li>
-      <li *ngIf="currentUser && currentUser.admin" class="nav-item" routerLinkActive="active">
+      <ng-container *ngIf="currentUser && currentUser.admin">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link waves-light" mdbWavesEffect routerLink="posts/new">Neuer Post</a>
       </li>
-      <!--<li class="nav-item">-->
-      <!--<a class="nav-link waves-light" mdbWavesEffect>Pricing</a>-->
-      <!--</li>-->
-
-      <!--&lt;!&ndash; Dropdown &ndash;&gt;-->
-      <!--<li class="nav-item dropdown" dropdown>-->
-      <!--<a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>-->
-      <!--Basic dropdown<span class="caret"></span></a>-->
-      <!--<div *dropdownMenu class="dropdown-menu dropdown dropdown-primary" role="menu">-->
-      <!--<a class="dropdown-item waves-light" mdbWavesEffect href="#">Action</a>-->
-      <!--<a class="dropdown-item waves-light" mdbWavesEffect href="#">Another action</a>-->
-      <!--<a class="dropdown-item waves-light" mdbWavesEffect href="#">Something else here</a>-->
-      <!--<div class="divider dropdown-divider"></div>-->
-      <!--<a class="dropdown-item waves-light" mdbWavesEffect href="#">Separated link</a>-->
-      <!--</div>-->
-      <!--</li>-->
-
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link waves-light" mdbWavesEffect routerLink="category">Kategorien</a>
+      </li>
+      </ng-container>
     </ul>
     <!-- Links -->
     <ul class="navbar-nav">

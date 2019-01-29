@@ -77,8 +77,8 @@ export class PostsPagedComponent implements OnInit {
     this.loadPagedPosts();
   }
 
-  reloadComments(index: number) {
-    const postId = this.posts[index].id;
-    this.postPagedService.reloadComments(index, postId, this.commentSize, this.commentPage);
-  }
+  // reloadComments(index: number) {
+  //   const postId = this.posts[index].id;
+  //   this.postPagedService.reloadComments(index, postId, this.commentSize, this.commentPage);
+  // }
 }

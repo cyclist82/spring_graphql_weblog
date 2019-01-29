@@ -1,6 +1,8 @@
 package de.awacademy.weblogGraphQL.api.post.graphql;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
+import de.awacademy.weblogGraphQL.api.category.Category;
+import de.awacademy.weblogGraphQL.api.category.CategoryRepository;
 import de.awacademy.weblogGraphQL.api.comment.Comment;
 import de.awacademy.weblogGraphQL.api.comment.CommentRepository;
 import de.awacademy.weblogGraphQL.api.post.Post;
@@ -20,11 +22,13 @@ public class PostResolver implements GraphQLResolver<Post> {
 	private UserRepository userRepository;
 	private PostOldRepository postOldRepository;
 	private CommentRepository commentRepository;
+	private CategoryRepository categoryRepository;
 
-	public PostResolver(UserRepository userRepository, PostOldRepository postOldRepository, CommentRepository commentRepository) {
+	public PostResolver(UserRepository userRepository, PostOldRepository postOldRepository, CommentRepository commentRepository, CategoryRepository categoryRepository) {
 		this.userRepository = userRepository;
 		this.postOldRepository = postOldRepository;
 		this.commentRepository = commentRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	@Unsecured
@@ -58,6 +62,11 @@ public class PostResolver implements GraphQLResolver<Post> {
 	@Unsecured
 	public List<Comment> getCommentsPaged(Post post, int page, int size) {
 		return commentRepository.findCommentsByPostIdOrderByCreateTimeDesc(post.getId(), PageRequest.of(page, size));
+	}
+
+	@Unsecured
+	public List<Category> getCategories(Post post) {
+		return categoryRepository.findByPostsContains(post);
 	}
 
 //	@Unsecured

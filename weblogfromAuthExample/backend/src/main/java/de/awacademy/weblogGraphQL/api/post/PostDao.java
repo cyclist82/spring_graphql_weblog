@@ -54,12 +54,16 @@ public class PostDao {
 		if (!currentUser.getId().equals(post.getCreator().getId()) && !currentUser.isAdmin()) {
 			throw new GraphQLException("Nicht authorisiert den Artikel zu verändern");
 		}
-		PostOld postOld= new PostOld(post.getTitle(), post.getText(), post);
+		PostOld postOld = new PostOld(post.getTitle(), post.getText(), post);
 		postOldRepository.save(postOld);
 		post.setTitle(title);
 		post.setText(text);
 		post.setLastModifier(currentUser);
 		post.setLastModifiedAt(LocalDateTime.now());
+		return postRepository.save(post);
+	}
+
+	public Post savePost(Post post) {
 		return postRepository.save(post);
 	}
 }

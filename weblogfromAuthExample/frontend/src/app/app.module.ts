@@ -38,6 +38,7 @@ import { HistoryDetailComponent } from './posts/post-history/history-detail/hist
 import { CreateCommentComponent } from './comment/create-comment/create-comment.component';
 import { ShowCommentComponent } from './comment/show-comment/show-comment.component';
 import { CommentsListComponent } from './comment/comments-list/comments-list.component';
+import { CategoryComponent } from './category/category/category.component';
 
 export function createApollo(httpLink: HttpLink) {
   const http = httpLink.create({uri: environment.graphql});
@@ -85,6 +86,7 @@ export function createApollo(httpLink: HttpLink) {
     CreateCommentComponent,
     ShowCommentComponent,
     CommentsListComponent,
+    CategoryComponent,
   ],
   imports: [
     CommonModule,

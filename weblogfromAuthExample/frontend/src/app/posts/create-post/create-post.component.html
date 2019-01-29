@@ -9,18 +9,13 @@
          name="title" #title="ngModel">
   <div class="form-group">
     <textarea #text="ngModel" ngModel name="text" required class="form-control rounded-0"
-              id="exampleFormControlTextarea2" rows="7" placeholder="Message"></textarea>
+              id="exampleFormControlTextarea2" rows="7" placeholder="Text"></textarea>
   </div>
 
-  <!-- Copy -->
-  <!--<div class="custom-control custom-checkbox mb-4">-->
-    <!--<input type="checkbox" class="custom-control-input" id="defaultContactFormCopy">-->
-    <!--<label class="custom-control-label" for="defaultContactFormCopy">Send me a copy of this message</label>-->
-  <!--</div>-->
   <div *ngIf="error" class="alert alert-danger" role="alert">
     {{error.toString() | graphqlerror}}
   </div>
-  <button class="btn btn-info btn-block" type="submit" [disabled]="createPostForm.invalid">Send</button>
+  <button class="btn-block" mdbBtn mdbWavesEffect color="primary" type="submit" [disabled]="createPostForm.invalid">Speichern</button>
 
 </form>
 <!-- Default form contact -->

@@ -1,5 +1,6 @@
 import {User} from './user.model';
 import {OldPost} from './oldPost.model';
+import {Category} from './category.model';
 
 export interface Post {
   id: String;
@@ -12,4 +13,5 @@ export interface Post {
   oldPosts: OldPost[];
   amountComments: number;
   commentsPaged: Comment[];
+  categories: Category[];
 }

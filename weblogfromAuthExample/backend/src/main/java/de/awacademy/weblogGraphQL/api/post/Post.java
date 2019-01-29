@@ -1,14 +1,13 @@
 package de.awacademy.weblogGraphQL.api.post;
 
+import de.awacademy.weblogGraphQL.api.category.Category;
 import de.awacademy.weblogGraphQL.api.comment.Comment;
 import de.awacademy.weblogGraphQL.api.postOld.PostOld;
 import de.awacademy.weblogGraphQL.api.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 public class Post {
@@ -28,6 +27,8 @@ public class Post {
 	private List<PostOld> oldPosts = new ArrayList<>();
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
 	private List<Comment> comments = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<Category> categories = new HashSet<>();
 //	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 //	private List<File> files = new ArrayList<>();
 
@@ -103,5 +104,13 @@ public class Post {
 
 	public void setOldPosts(List<PostOld> oldPosts) {
 		this.oldPosts = oldPosts;
+	}
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 }

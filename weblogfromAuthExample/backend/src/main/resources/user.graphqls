@@ -24,6 +24,8 @@ type Query {
     allPosts: [Post]!
     allPostsSorted(page: Int!, size: Int!, sortOrder: String!, sortBy: String!): PostsPagedOutput!
     getPost(id: ID!): Post!
+    allCategories: [Category]!
+    categoriesByActive(active: Boolean!): [Category]!
 }
 
 type Mutation {
@@ -36,7 +38,9 @@ type Mutation {
     createComment(postId: ID!, text: String): Comment!
     #    saveFile(multipartFile: MultipartFile!, postId: ID!): File!
     deleteComment(id: ID!): Boolean
-
+    createCategory(name: String!): Category!
+    toggleCategoryActive(id: ID!): Category!
+    addCategoryToPost(postId: ID!, categoryId: ID!): Boolean!
 }
 
 type User {
@@ -77,6 +81,7 @@ type Post {
     amountComments: Int
     comments: [Comment]!
     commentsPaged(page: Int, size: Int): [Comment]!
+    categories: [Category]!
 }
 
 type PostsPagedOutput {
@@ -106,8 +111,9 @@ type Comment {
     creator: User!
 }
 
-#type MultipartFile {
-#    name: String
-#    originalFilename: String
-#    contentType: String
-#}
+type Category {
+    id: ID!
+    name: String!
+    active: Boolean!
+    posts: [Post]!
+}

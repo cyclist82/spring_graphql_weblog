@@ -1,0 +1,33 @@
+<div class="container my-3">
+  <div class="col-lg-8 offset-lg-2">
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">Kategorien verwalten</h2>
+      </div>
+      <div class="card-body">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon3">Neue Kategorie<span *ngIf="!categoryInput.checkValidity()">, bitte mindestens 3 Zeichen</span></span>
+          </div>
+          <input #categoryInput [(ngModel)]="categoryName" type="text" class="form-control py-4" id="basic-url"
+                 aria-describedby="basic-addon3" required minlength="3">
+          <div class="input-group-prepend">
+            <button class="p-2" mdbBtn mdbWavesEffect [disabled]="!categoryInput.checkValidity()" color="primary"
+                    (click)="onCreateCategory()"><i
+              class="fa fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <ul class="list-group">
+        <li *ngFor=" let category of categories; index as i"
+            class="list-group-item d-flex justify-content-between align-items-center">
+          {{category.name}}
+          <span (click)="onToggleActive(category.id, i)" [ngClass]="category.active ? 'badge-primary' : 'badge-danger'"
+                class="badge badge-pill p-2">{{category.active ? 'Aktiv' : 'Deaktiviert'}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
